@@ -1,63 +1,40 @@
-function audio() {
-  document.getElementById("audio").play();
-}
-
-function dice1(event) {
+async function get_weather(event) {
   event.preventDefault();
 
-  const diceElement = document.querySelector("#dice-1");
-  diceElement.classList.add("rolling");
+  const cityNames = document
+    .querySelector("#cityName")
+    .value.split(",")
+    .map((city) => city.trim());
 
-  audio();
+  document.getElementById("weather-results").innerHTML = "";
 
-  let number = Math.random() * 6;
-  number = Number.parseInt(number);
+  const api_key = "api_key_dekhega_babu_hat";
 
-  setTimeout(() => {
-    if (number === 0) {
-      diceElement.innerHTML = '<i class="bi bi-dice-1 icon"></i>';
-    } else if (number === 1) {
-      diceElement.innerHTML = '<i class="bi bi-dice-2 icon"></i>';
-    } else if (number === 2) {
-      diceElement.innerHTML = '<i class="bi bi-dice-3 icon"></i>';
-    } else if (number === 3) {
-      diceElement.innerHTML = '<i class="bi bi-dice-4 icon"></i>';
-    } else if (number === 4) {
-      diceElement.innerHTML = '<i class="bi bi-dice-5 icon"></i>';
-    } else {
-      diceElement.innerHTML = '<i class="bi bi-dice-6 icon"></i>';
+  for (const cityName of cityNames) {
+    try {
+      const response = await axios.get(
+        `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${api_key}&units=metric`
+      );
+
+      const kelvin = response.data.list[0].main.temp;
+      const celsius = kelvin; // Convert to Celsius as we already use 'metric' units
+
+      const weatherDiv = document.createElement("div");
+      weatherDiv.classList.add("weather-card");
+
+      weatherDiv.innerHTML = `
+                <h2>${cityName}</h2>
+                <p class="country">${response.data.city.country}</p>
+                <h3 class="temp">${celsius.toFixed(1)} °C</h3>
+            `;
+
+      document.getElementById("weather-results").appendChild(weatherDiv);
+    } catch (error) {
+      const weatherDiv = document.createElement("div");
+      weatherDiv.classList.add("weather-card");
+      weatherDiv.innerHTML = `<p>Sorry, we couldn't find weather data for ${cityName}.</p>`;
+      document.getElementById("weather-results").appendChild(weatherDiv);
     }
-
-    diceElement.classList.remove("rolling");
-  }, 600);
+  }
 }
-
-function dice2(event) {
-  event.preventDefault();
-
-  const diceElement = document.querySelector("#dice-2");
-  diceElement.classList.add("rolling");
-
-  audio();
-
-  let number = Math.random() * 6;
-  number = Number.parseInt(number);
-
-  setTimeout(() => {
-    if (number === 0) {
-      diceElement.innerHTML = '<i class="bi bi-dice-1-fill icon"></i>';
-    } else if (number === 1) {
-      diceElement.innerHTML = '<i class="bi bi-dice-2-fill icon"></i>';
-    } else if (number === 2) {
-      diceElement.innerHTML = '<i class="bi bi-dice-3-fill icon"></i>';
-    } else if (number === 3) {
-      diceElement.innerHTML = '<i class="bi bi-dice-4-fill icon"></i>';
-    } else if (number === 4) {
-      diceElement.innerHTML = '<i class="bi bi-dice-5-fill icon"></i>';
-    } else {
-      diceElement.innerHTML = '<i class="bi bi-dice-6-fill icon"></i>';
-    }
-
-    diceElement.classList.remove("rolling");
-  }, 600);
-}
+get_weather("London");
