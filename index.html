@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Roller ✨</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" />
+</head>
+<body>
+    <audio src="sound.mp3" id="audio" preload="auto"></audio>
+
+    <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
+    <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
+    <div class="particle" style="left: 50%; animation-delay: 6s;"></div>
+    <div class="particle" style="left: 60%; animation-delay: 1s;"></div>
+    <div class="particle" style="left: 70%; animation-delay: 3s;"></div>
+    <div class="particle" style="left: 80%; animation-delay: 5s;"></div>
+    <div class="particle" style="left: 90%; animation-delay: 7s;"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="title"><i class="bi bi-dice-6 dice-icon"></i> Dice</h1>
+            <p class="subtitle">Click on the roll button and roll the Dice</p>
+        </div>
+        
+        <div class="dice-display">
+            <div class="dice" id="dice-1" onclick="dice1(event)">
+                <i class="bi bi-dice-6 icon"></i>
+            </div>
+            <div class="dice" id="dice-2" onclick="dice2(event)">
+                <i class="bi bi-dice-6-fill icon"></i>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="btn" onclick="dice1(event)">
+                <span><i class="bi bi-dice-5-fill"></i> Roll Dice 1</span>
+            </button>
+            <button class="btn" onclick="dice2(event)">
+                <span><i class="bi bi-dice-3-fill"></i> Roll Dice 2</span>
+            </button>
+        </div>
+    </div>
+
+    <script src="script.mjs"></script>
+
+</body>
+</html>
